@@ -3,6 +3,7 @@ import { Injectable }       from '@angular/core';
 import { DropdownQuestion } from './question-dropdown';
 import { QuestionBase }     from './question-base';
 import { TextboxQuestion }  from './question-textbox';
+import { DatepickerQuestion } from './question-datepicker';
 
 @Injectable()
 export class QuestionService {
@@ -45,7 +46,15 @@ export class QuestionService {
           text: '*** Also enter your email address! ***'
         },
         order: 2
-      })
+      }),
+
+      new DatepickerQuestion({
+        key: 'birthdate',
+        label: 'Birth date',
+        type: 'date',
+        order: 4
+      }),
+
     ];
 
     return questions.sort((a, b) => a.order - b.order);
