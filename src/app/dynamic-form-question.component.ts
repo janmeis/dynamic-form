@@ -12,6 +12,4 @@ export class DynamicFormQuestionComponent {
   @Input() form: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }
   get isTouched() { return this.form.controls[this.question.key].touched; }
-  validate() {this.form.controls[this.question.key].markAsTouched(); } 
-  reset() {this.form.controls[this.question.key].reset(); } 
 }

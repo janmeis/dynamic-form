@@ -1,33 +1,44 @@
-import { Component, Input, OnInit, ViewChildren, QueryList }  from '@angular/core';
-import { FormGroup }                 from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 
-import { QuestionBase }              from './question-base';
-import { QuestionControlService }    from './question-control.service';
-import { DynamicFormQuestionComponent } from './dynamic-form-question.component';
+import { QuestionBase } from './question-base';
+import { QuestionControlService } from './question-control.service';
+
+
+/// <see cref="https://stackoverflow.com/a/50992362"></see>
+function markControlsTouched(group: FormGroup | FormArray): void {
+  Object.keys(group.controls).forEach((key: string) => {
+    const abstractControl = group.controls[key];
+
+    if (abstractControl instanceof FormGroup || abstractControl instanceof FormArray)
+      markControlsTouched(abstractControl);
+    else
+      abstractControl.markAsTouched();
+  });
+}
 
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  providers: [ QuestionControlService ]
+  providers: [QuestionControlService]
 })
 export class DynamicFormComponent implements OnInit {
-  @ViewChildren(DynamicFormQuestionComponent) dynamicFormsQuestions: QueryList<DynamicFormQuestionComponent>;
   @Input() questions: QuestionBase<any>[] = [];
   form: FormGroup;
   payLoad = '';
 
-  constructor(private qcs: QuestionControlService) {  }
+  constructor(private qcs: QuestionControlService) { }
 
   ngOnInit() {
     this.form = this.qcs.toFormGroup(this.questions);
   }
 
   onSubmit() {
-    this.dynamicFormsQuestions.forEach(q => q.validate());
+    markControlsTouched(this.form);
     this.payLoad = JSON.stringify(this.form.value);
   }
   onReset() {
-    this.dynamicFormsQuestions.forEach(q => q.reset());
+    this.form.reset();
     this.payLoad = '';
   }
 }
