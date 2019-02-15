@@ -1,9 +1,9 @@
 import { Injectable }       from '@angular/core';
 
-import { DropdownQuestion } from './question-dropdown';
-import { QuestionBase }     from './question-base';
-import { TextboxQuestion }  from './question-textbox';
-import { DatepickerQuestion } from './question-datepicker';
+import { DropdownQuestion } from '../components/question-dropdown';
+import { QuestionBase }     from '../components/question-base';
+import { TextboxQuestion }  from '../components/question-textbox';
+import { DatepickerQuestion } from '../components/question-datepicker';
 
 @Injectable()
 export class QuestionService {

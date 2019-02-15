@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { QuestionBase } from './question-base';
+import { QuestionBase } from '../components/question-base';
+
 
 @Component({
   selector: 'app-question',
