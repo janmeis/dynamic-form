@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { QuestionService } from './services/question.service';
 
+declare var kendo: any;
 
 @Component({
   selector: 'app-root',
@@ -12,5 +13,8 @@ export class AppComponent {
 
   constructor(service: QuestionService) {
     this.questions = service.getQuestions();
+    if (window !== undefined) {
+      (<any>window).$ = kendo.jQuery;
+    }
   }
 }
