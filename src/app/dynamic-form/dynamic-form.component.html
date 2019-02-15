@@ -6,21 +6,12 @@
     </div>
 
     <div class="form-row">
-      <div>
-        <label>{{selectedDate | date:'d.M.yyyy'}}</label>
-        <div>
-          <input type="date" #datePicker />
-        </div>
-      </div>
-    </div>
-
-    <div class="form-row">
       <button type="submit">Save</button>
-      <button type="reset">Reset</button>
+      <button type="reset" (click)="onReset()">Reset</button>
     </div>
   </form>
 
   <div *ngIf="payLoad" class="form-row">
-    <strong>Saved the following values</strong><br>{{payLoad}}
+    <strong>Saved the following values</strong><br>{{form.value | json}}
   </div>
 </div>

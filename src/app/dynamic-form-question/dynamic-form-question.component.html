@@ -3,15 +3,23 @@
 
   <div [ngSwitch]="question.controlType">
 
-    <input *ngSwitchCase="'textbox'" [formControlName]="question.key"
-            [id]="question.key" [type]="question.type" />
+    <input *ngSwitchCase="'textbox'"
+           [formControlName]="question.key"
+           [id]="question.key"
+           [type]="question.type"
+           kendoTextBox>
 
-    <select [id]="question.key" *ngSwitchCase="'dropdown'" [formControlName]="question.key">
-      <option *ngFor="let opt of question.options" [value]="opt.key">{{opt.value}}</option>
-    </select>
+    <kendo-dropdownlist *ngSwitchCase="'dropdown'"
+                        [formControlName]="question.key"
+                        [id]="question.key"
+                        [data]="question.options"
+                        [textField]="'value'"
+                        [valueField]="'key'"
+                        [valuePrimitive]="true"></kendo-dropdownlist>
 
-    <input *ngSwitchCase="'datepicker'" [formControlName]="question.key"
-            [id]="question.key" [type]="question.type" />
+    <app-question-datepicker *ngSwitchCase="'datepicker'"
+                             [formControl]="form.controls[question.key]"
+                             ngDefaultControl></app-question-datepicker>
 
   </div> 
 

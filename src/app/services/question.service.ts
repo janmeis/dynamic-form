@@ -29,7 +29,7 @@ export class QuestionService {
       new TextboxQuestion({
         key: 'firstName',
         label: 'First name',
-        value: '',
+        value: 'Jan',
         required: {
           value: true,
           text: '!!! You must enter you first name !!!'
@@ -41,6 +41,7 @@ export class QuestionService {
         key: 'emailAddress',
         label: 'Email',
         type: 'email',
+        value: 'jan.novak@email.cz',
         required: {
           value: true,
           text: '*** Also enter your email address! ***'
@@ -52,6 +53,7 @@ export class QuestionService {
         key: 'birthdate',
         label: 'Birth date',
         type: 'date',
+        value: '1.12.2018',
         order: 4
       }),
 
