@@ -5,7 +5,10 @@ declare var kendo: any;
 
 @Component({
   selector: 'app-question-datepicker',
-  templateUrl: './question-datepicker.component.html'
+  template: `
+  <input #datePicker>
+  {{formControl.value}}
+  `
 })
 export class QuestionDatepickerComponent implements AfterViewInit, OnDestroy {
   @ViewChild('datePicker') datePickerEl: ElementRef;
@@ -15,14 +18,19 @@ export class QuestionDatepickerComponent implements AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setKendoCulture();
     const nativeElement = kendo.jQuery(this.datePickerEl.nativeElement);
+    nativeElement.kendoMaskedTextBox({ mask: '00.00.0000'});
     nativeElement.kendoDatePicker({
-      format: 'd.M.yyyy',
+      format: 'dd.MM.yyyy',
       parseFormats: ['d.M.yyyy', 'dd.MM.yyyy'],
       change: e =>
         this.formControl.setValue(e.sender.value())
     });
+    nativeElement.closest('.k-datepicker')
+      .add(nativeElement)
+      .removeClass('k-textbox');
     const datePicker = nativeElement.data('kendoDatePicker');
     datePicker.value(this.formControl.value);
+    datePicker.trigger('change');
   }
   ngOnDestroy(): void {
     kendo.destroy(this.hostEl.nativeElement);

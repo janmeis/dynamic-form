@@ -3,11 +3,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { AppComponent } from './app.component';
-import { QuestionDatepickerComponent } from './components/question-datepicker/question-datepicker.component';
+import { QuestionDatepickerComponent } from './components/question-datepicker.component';
 import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
@@ -20,9 +21,10 @@ import '@progress/kendo-ui';
     FormsModule,
     ReactiveFormsModule,
     ButtonsModule,
+    DateInputsModule,
+    DropDownsModule,
     GridModule,
     InputsModule,
-    DropDownsModule 
   ],
   declarations: [
     AppComponent,
