@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { AfterViewInit, Component, ElementRef, forwardRef, OnDestroy, ViewChild } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BaseControlValueAccessor } from './base-control-value-accessor';
 
 declare var kendo: any;
 
@@ -7,50 +8,59 @@ declare var kendo: any;
   selector: 'app-question-datepicker',
   template: `
   <input #datePicker>
-  {{formControl.value}}
-  `
+  {{value}}
+  `,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => QuestionDatepickerComponent),
+      multi: true
+    }
+  ]
 })
-export class QuestionDatepickerComponent implements AfterViewInit, OnDestroy {
+export class QuestionDatepickerComponent extends BaseControlValueAccessor<Date> implements AfterViewInit {
+  value: Date;
   @ViewChild('datePicker') datePickerEl: ElementRef;
-  @Input() formControl: FormControl;
 
-  constructor(private hostEl: ElementRef) { }
+  constructor() {
+    super();
+  }
   ngAfterViewInit(): void {
     this.setKendoCulture();
     const nativeElement = kendo.jQuery(this.datePickerEl.nativeElement);
-    nativeElement.kendoMaskedTextBox({ mask: '00.00.0000'});
+    nativeElement.kendoMaskedTextBox({ mask: '00.00.0000' });
     nativeElement.kendoDatePicker({
       format: 'dd.MM.yyyy',
       parseFormats: ['d.M.yyyy', 'dd.MM.yyyy'],
-      change: e =>
-        this.formControl.setValue(e.sender.value())
+      change: (e: { sender: { value: () => Date } }) =>
+        setTimeout(() => {
+          this.value = e.sender.value();
+          this.onChange(this.value);
+        }, 0)
     });
     nativeElement.closest('.k-datepicker')
       .add(nativeElement)
       .removeClass('k-textbox');
     const datePicker = nativeElement.data('kendoDatePicker');
-    datePicker.value(this.formControl.value);
+    datePicker.value(this.value);
     datePicker.trigger('change');
-  }
-  ngOnDestroy(): void {
-    kendo.destroy(this.hostEl.nativeElement);
   }
 
   private setKendoCulture() {
-    kendo.culture().calendar.firstDay= 1;
+    kendo.culture().calendar.firstDay = 1;
     kendo.culture().calendar.days = {
-        // full day names
-        names: ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
-        // abbreviated day names
-        namesAbbr: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        // shortest day names
-        namesShort: [ 'Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So' ]
+      // full day names
+      names: ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
+      // abbreviated day names
+      namesAbbr: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      // shortest day names
+      namesShort: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']
     };
     kendo.culture().calendar.months = {
-        // full month names
-        names: ['Leden', 'Únor', 'Březen', 'Duben', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        // abbreviated month names
-        namesAbbr: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-    };    
+      // full month names
+      names: ['Leden', 'Únor', 'Březen', 'Duben', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      // abbreviated month names
+      namesAbbr: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    };
   }
 }
