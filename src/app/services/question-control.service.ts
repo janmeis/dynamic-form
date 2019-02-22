@@ -70,4 +70,6 @@ export class QuestionControlService {
     Object.entries(obj).filter(([k, v]) => k == 'value').length > 0;
 }
 
+// Object.entries(elem).filter(([k, v]) => k!='required' && this.isFormControl(v))
+
 
