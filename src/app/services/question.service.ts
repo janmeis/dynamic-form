@@ -5,8 +5,14 @@ import { QuestionBase }     from '../components/question-base';
 import { TextboxQuestion }  from '../components/question-textbox';
 import { DatepickerQuestion } from '../components/question-datepicker';
 
+import party from '../../assets/Party.json';
+
 @Injectable()
 export class QuestionService {
+
+  getParty(): any {
+    return party.Party;
+  }
 
   // TODO: get from a remote source of question metadata
   // TODO: make asynchronous

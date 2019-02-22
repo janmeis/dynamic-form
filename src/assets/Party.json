@@ -1,0 +1,119 @@
+{
+  "Party": {
+    "Id": 1,
+    "Identification": {
+      "Company": {
+        "ClientName": {
+          "value": "Fialová, Charvátová and Tománek",
+          "label": "Jméno klienta",
+          "type": "text",
+          "required": {
+            "value": true
+          }
+        },
+        "IdentificationNumber": {
+          "value": "37766753",
+          "label": "IČO",
+          "type": "text",
+          "required": {
+            "value": true
+          }
+        },
+        "Zecho": {
+          "value": "54661",
+          "label": "ZEČO",
+          "type": "text"
+        },
+        "Address": {
+          "CountryId": {
+            "label": "Země",
+            "value": 226,
+            "codebook": "country"
+          },
+          "City": {
+            "value": "Luhačovice2",
+            "label": "Obec",
+            "type": "text"
+          },
+          "Street": {
+            "value": "K Ďáblicům",
+            "label": "Ulice",
+            "type": "text"
+          },
+          "Zip": {
+            "value": "121 58",
+            "label": "ZIP",
+            "type": "text"
+          },
+          "StreeetNumber": {
+            "value": "1138",
+            "label": "Číslo",
+            "type": "text"
+          }
+        }
+      },
+      "Person": {
+        "FirstName": {
+          "value": "Čeňka",
+          "label": "Jméno",
+          "type": "text",
+          "required": {
+            "value": true
+          }
+        },
+        "Surname": {
+          "value": "Kyselová",
+          "label": "Příjmení",
+          "type": "text",
+          "required": {
+            "value": true
+          }
+        },
+        "BirthNumber": {
+          "value": "1572083122",
+          "label": "RČ",
+          "type": "text"
+        },
+        "BirthDate": {
+          "value": "2018-12-05",
+          "label": "Datum narození",
+          "type": "date",
+          "required": {
+            "value": true
+          }
+        },
+        "CitizenshipId": {
+          "value": 106,
+          "codebook": "country"
+        },
+        "Address": {
+          "CountryId": {
+            "label": "Země",
+            "value": 297,
+            "codebook": "country"
+          },
+          "City": {
+            "value": null,
+            "label": "Obec",
+            "type": "text"
+          },
+          "Street": {
+            "value": null,
+            "label": "Ulice",
+            "type": "text"
+          },
+          "Zip": {
+            "value": null,
+            "label": "ZIP",
+            "type": "text"
+          },
+          "StreeetNumber": {
+            "value": null,
+            "label": "Číslo",
+            "type": "text"
+          }
+        }
+      }
+    }
+  }
+}

@@ -10,9 +10,11 @@ declare var kendo: any;
 })
 export class AppComponent {
   questions: any[];
+  party: any;
 
   constructor(service: QuestionService) {
     this.questions = service.getQuestions();
+    this.party = service.getParty();
     if (window !== undefined) {
       (<any>window).$ = kendo.jQuery;
     }
