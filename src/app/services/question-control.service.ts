@@ -47,7 +47,6 @@ export class QuestionControlService {
   }
 
   private traverseObject(obj, group: any) {
-    debugger;
     console.log('<object>');
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
@@ -59,9 +58,9 @@ export class QuestionControlService {
           console.log(key + ':');
           if (Object.entries(elem).length > 0) {
             group[key] = {};
-            group = group[key]
-          }
-          this.traverse(elem, group);
+            this.traverse(elem, group[key]);
+          } else
+            this.traverse(elem, group);
         }
       }
     }
