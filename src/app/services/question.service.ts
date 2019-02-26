@@ -1,12 +1,18 @@
-import { Injectable }       from '@angular/core';
+import { Injectable } from '@angular/core';
 
-import { DropdownQuestion } from '../components/question-dropdown';
-import { QuestionBase }     from '../components/question-base';
-import { TextboxQuestion }  from '../components/question-textbox';
+import { isArray, isControl, isObject } from '../common/functions';
+import { QuestionBase } from '../components/question-base';
 import { DatepickerQuestion } from '../components/question-datepicker';
+import { DropdownQuestion } from '../components/question-dropdown';
+import { TextboxQuestion } from '../components/question-textbox';
+import { BaseControl } from '../controls/base-control';
+import { TextboxControl } from '../controls/textbox-control';
+import { DatepickerControl } from './../controls/datepicker-control';
+import { DropdownControl } from './../controls/dropdown-control';
+import { GroupControl } from './../controls/group-control';
 
 import party from '../../assets/Party.json';
-import { isControl, isArray, isObject } from '../common/functions';
+
 
 @Injectable()
 export class QuestionService {
@@ -26,10 +32,10 @@ export class QuestionService {
         key: 'brave',
         label: 'Bravery Rating',
         options: [
-          {key: 'solid',  value: 'Solid'},
-          {key: 'great',  value: 'Great'},
-          {key: 'good',   value: 'Good'},
-          {key: 'unproven', value: 'Unproven'}
+          { key: 'solid', value: 'Solid' },
+          { key: 'great', value: 'Great' },
+          { key: 'good', value: 'Good' },
+          { key: 'unproven', value: 'Unproven' }
         ],
         order: 3
       }),
@@ -74,11 +80,13 @@ export class QuestionService {
     if (maxLevel)
       this.maxLevel = maxLevel;
 
-    return [{}];
+    const group = []
+    this.traverse(party, group, 0)
+    return group.sort((a, b) => a.order - b.order);
   }
 
-   // <see cref="https://www.quora.com/How-do-you-loop-through-a-complex-JSON-tree-of-objects-and-arrays-in-JavaScript"/>
-   private traverse(x: any, group: any, level: number) {
+  // <see cref="https://www.quora.com/How-do-you-loop-through-a-complex-JSON-tree-of-objects-and-arrays-in-JavaScript"/>
+  private traverse(x: any, group: any, level: number) {
     if (isArray(x))
       this.traverseArray(x, group, level);
     else if (isObject(x))
@@ -92,20 +100,56 @@ export class QuestionService {
       if (obj.hasOwnProperty(key)) {
         const prop = obj[key];
         if (isControl(prop)) {
-          // const c = prop['required'] && prop['required']['value']
-          //   ? new FormControl(prop['value'] || '', Validators.required)
-          //   : new FormControl(prop['value'] || '');
-          // (group as FormGroup).addControl(key, c);
+          this.generateControl(key, prop, group);
         } else if (level < this.maxLevel)
           if (typeof prop != 'string' && Object.entries(prop).length > 0) {
-            // const g = new FormGroup({});
-            // (group as FormGroup).addControl(key, g);
-            const g = [];
+            const g = this.generateGroup(key, prop, group);
             this.traverse(prop, g, level + 1);
           } else
             this.traverse(prop, group, level + 1);
       }
     }
   }
+  private generateGroup(key: string, prop: any, group: any): BaseControl[] {
+    const label = prop['label'];
+    const g = new GroupControl({ label: label });
+    group.push(g);
+    
+    return g.controls;
+  }
+  private generateControl(key: string, prop: any, group: any): void {
+    let c: BaseControl;
+    let options = {
+      key: key,
+      label: prop['label'],
+      value: prop['value'] || ''
+    };
+    if (prop['required'] && prop['required']['value'])
+      options['required'] = {
+        value: prop['required']['value'] || false,
+        text: prop['required']['text'] || ''
+      };
 
+    switch (prop['type']) {
+      case 'text':
+        c = new TextboxControl({
+          ...options,
+          type: 'text'
+        });
+        break;
+      case 'dropdown':
+        c = new DropdownControl({
+          ...options,
+          codebook: prop['codebook']
+        });
+        break;
+      case 'date':
+        c = new DatepickerControl(options);
+        break;
+      default:
+        break;
+    }
+
+    group.push(c);
+  }
 }

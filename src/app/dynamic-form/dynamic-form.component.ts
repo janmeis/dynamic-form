@@ -1,3 +1,4 @@
+import { QuestionService } from './../services/question.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { QuestionControlService } from '../services/question-control.service';
@@ -29,10 +30,14 @@ export class DynamicFormComponent implements OnInit {
   payLoad = false;
   private readonly maxLevel = 1;
 
-  constructor(private qcs: QuestionControlService) { }
+  constructor(
+    private qcs: QuestionControlService,
+    private qs: QuestionService
+    ) { }
   ngOnInit(): void {
     this.form = this.qcs.toFormGroup(this.questions);
     this.partyForm = this.qcs.toPartyFormGroup(this.party.Identification, this.maxLevel);
+    const partyModel = this.qs.getPartyModel(this.party, this.maxLevel + 1);
   }
   onSubmit() {
     markControlsTouched(this.form);

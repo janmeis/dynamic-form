@@ -30,33 +30,40 @@ export class QuestionControlService {
   }
 
   // <see cref="https://www.quora.com/How-do-you-loop-through-a-complex-JSON-tree-of-objects-and-arrays-in-JavaScript"/>
-  private traverse(x: any, control: AbstractControl, level: number) {
+  private traverse(x: any, group: any, level: number) {
     if (isArray(x))
-      this.traverseArray(x, control, level);
+      this.traverseArray(x, group, level);
     else if (isObject(x))
-      this.traverseObject(x, control, level);
+      this.traverseObject(x, group, level);
   }
-  private traverseArray(arr: any[], control: AbstractControl, level: number) {
-    arr.forEach(x => this.traverse(x, control, level + 1));
+  private traverseArray(arr: any[], group: any, level: number) {
+    arr.forEach(x => this.traverse(x, group, level + 1));
   }
-  private traverseObject(obj: object, control: AbstractControl, level: number) {
+  private traverseObject(obj: object, group: any, level: number) {
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
         const prop = obj[key];
         if (isControl(prop)) {
-          const c = prop['required'] && prop['required']['value']
-            ? new FormControl(prop['value'] || '', Validators.required)
-            : new FormControl(prop['value'] || '');
-          (control as FormGroup).addControl(key, c);
+          this.generateControl(key, prop, group);
         } else if (level < this.maxLevel)
           if (typeof prop != 'string' && Object.entries(prop).length > 0) {
-            const g = new FormGroup({});
-            (control as FormGroup).addControl(key, g);
+            const g = this.generateGroup(key, prop, group);
             this.traverse(prop, g, level + 1);
           } else
-            this.traverse(prop, control, level + 1);
+            this.traverse(prop, group, level + 1);
       }
     }
+  }
+  private generateGroup(key: string, prop: any, group: any) {
+    const g = new FormGroup({});
+    (group as FormGroup).addControl(key, g);
+    return g;
+  }
+  private generateControl(key: string, prop: any, group: any) {
+    const c = prop['required'] && prop['required']['value']
+      ? new FormControl(prop['value'] || '', Validators.required)
+      : new FormControl(prop['value'] || '');
+    (group as FormGroup).addControl(key, c);
   }
 }
 

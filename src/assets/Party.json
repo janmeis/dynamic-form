@@ -31,7 +31,8 @@
           "CountryId": {
             "label": "Země",
             "value": 226,
-            "codebook": "country"
+            "codebook": "country",
+            "type": "dropdown"
           },
           "City": {
             "value": "Luhačovice2",
@@ -88,14 +89,17 @@
         },
         "CitizenshipId": {
           "value": 106,
-          "codebook": "country"
+          "label": "Občanství",
+          "codebook": "country",
+          "type": "dropdown"
         },
         "Address": {
           "label": "Adresa fyzické osoby",
           "CountryId": {
             "label": "Země",
             "value": 297,
-            "codebook": "country"
+            "codebook": "country",
+            "type": "dropdown"
           },
           "City": {
             "value": null,
