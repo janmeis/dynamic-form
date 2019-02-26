@@ -19,6 +19,30 @@ function markControlsTouched(group: FormGroup | FormArray): void {
 @Component({
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
+  styles: [`
+    .fieldlist {
+      margin: 0;
+      padding: .2em 0 .5em 0;
+      background-color: #eae8e8;
+  }
+  .fieldlist li {
+      list-style: none;
+      padding: 0 1em 1em 1em;
+  }
+  .fieldlist label {
+      display: block;
+      font-weight: bold;
+      font-size: .8em;
+      padding-bottom: .5em;
+      color: #444;
+  }    
+  .k-textbox {
+    width: 100%;
+  }
+  .k-block {
+    margin-bottom: 2em;
+  }
+  `],
   providers: [QuestionControlService]
 })
 export class DynamicFormComponent implements OnInit {
@@ -27,6 +51,7 @@ export class DynamicFormComponent implements OnInit {
   list: any;
   form: FormGroup;
   partyForm: FormGroup;
+  partyModel: any[];
   payLoad = false;
   private readonly maxLevel = 1;
 
@@ -37,7 +62,7 @@ export class DynamicFormComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.qcs.toFormGroup(this.questions);
     this.partyForm = this.qcs.toPartyFormGroup(this.party.Identification, this.maxLevel);
-    const partyModel = this.qs.getPartyModel(this.party, this.maxLevel + 1);
+    this.partyModel = this.qs.getPartyModel(this.party.Identification, this.maxLevel);
   }
   onSubmit() {
     markControlsTouched(this.form);

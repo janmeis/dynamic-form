@@ -23,9 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              {
-                "input": "node_modules/@progress/kendo-theme-bootstrap/dist/all.css"
-              },
+              "node_modules/@progress/kendo-ui/css/web/kendo.common.min.css",
+              "node_modules/@progress/kendo-ui/css/web/kendo.default.min.css",
+              "node_modules/@progress/kendo-ui/css/web/kendo.default.mobile.min.css",
               "src/styles.css"
             ],
             "scripts": []

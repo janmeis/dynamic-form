@@ -5,14 +5,13 @@ import { QuestionBase } from '../components/question-base';
 import { DatepickerQuestion } from '../components/question-datepicker';
 import { DropdownQuestion } from '../components/question-dropdown';
 import { TextboxQuestion } from '../components/question-textbox';
-import { BaseControl } from '../controls/base-control';
+import { IBaseControl } from '../controls/ibase-control';
 import { TextboxControl } from '../controls/textbox-control';
 import { DatepickerControl } from './../controls/datepicker-control';
 import { DropdownControl } from './../controls/dropdown-control';
 import { GroupControl } from './../controls/group-control';
 
 import party from '../../assets/Party.json';
-
 
 @Injectable()
 export class QuestionService {
@@ -110,15 +109,17 @@ export class QuestionService {
       }
     }
   }
-  private generateGroup(key: string, prop: any, group: any): BaseControl[] {
-    const label = prop['label'];
-    const g = new GroupControl({ label: label });
+  private generateGroup(key: string, prop: any, group: any): IBaseControl[] {
+    const g = new GroupControl({ 
+        key: key, 
+        label: prop['label'] 
+      });
     group.push(g);
     
     return g.controls;
   }
   private generateControl(key: string, prop: any, group: any): void {
-    let c: BaseControl;
+    let c: IBaseControl;
     let options = {
       key: key,
       label: prop['label'],
