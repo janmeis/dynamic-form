@@ -33,7 +33,7 @@ function markControlsTouched(group: FormGroup | FormArray): void {
       display: block;
       font-weight: bold;
       font-size: .8em;
-      padding-bottom: .5em;
+      padding-bottom: .3em;
       color: #444;
   }    
   .k-textbox {

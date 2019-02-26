@@ -22,7 +22,7 @@ export abstract class BaseInputControl<T> implements IBaseControl {
       text?: string
     },
     order?: number,
-  } = {}) {
+  }) {
     this.key = options.key || '';
     this.label = options.label || '';
     this.value = options.value;

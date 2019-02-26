@@ -12,7 +12,7 @@ export class GroupControl implements IBaseControl {
     label?: string
     order?: number,
     controls?: IBaseControl[]
-  } = {}) {
+  }) {
     this.key = options.key || '';
     this.label = options.label || '';
     this.order = options.order === undefined ? 1 : options.order;
