@@ -8,7 +8,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { AppComponent } from './app.component';
-import { QuestionDatepickerComponent } from './components/question-datepicker.component';
+import { DatepickerInputComponent } from './components/datepicker-input.component';
 import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 
@@ -30,7 +30,7 @@ import '@progress/kendo-ui';
     AppComponent,
     DynamicFormComponent,
     DynamicFormQuestionComponent,
-    QuestionDatepickerComponent,
+    DatepickerInputComponent,
   ],
   bootstrap: [AppComponent]
 })

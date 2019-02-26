@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
 
 import { QuestionBase } from '../components/question-base';
-import { DebugRenderer2 } from '@angular/core/src/view/services';
+import { isControl, isArray, isObject } from '../common/functions';
+
 
 @Injectable()
 export class QuestionControlService {
+  private maxLevel: number;
   constructor() { }
 
   toFormGroup(questions: QuestionBase<any>[]) {
-    let group: any = {};
+    let group = {};
 
     questions.forEach(question => {
       group[question.key] = question.required && question.required.value
@@ -19,57 +21,43 @@ export class QuestionControlService {
     return new FormGroup(group);
   }
 
-  toPartyFormGroup(party: any): FormGroup {
-    let group: any = {};
-    this.traverse(party, group);
+  toPartyFormGroup(party: any, maxLevel: number): FormGroup {
+    this.maxLevel = maxLevel;
+    let form = new FormGroup({});
+    this.traverse(party, form, 0);
 
-    return new FormGroup({});
+    return form;
   }
 
   // <see cref="https://www.quora.com/How-do-you-loop-through-a-complex-JSON-tree-of-objects-and-arrays-in-JavaScript"/>
-  private traverse(x, group: any) {
-    if (this.isArray(x)) {
-      this.traverseArray(x, group);
-    } else if ((typeof x === 'object') && (x !== null)) {
-      this.traverseObject(x, group);
-    } else {
-      console.log(x);
-    }
+  private traverse(x: any, control: AbstractControl, level: number) {
+    if (isArray(x))
+      this.traverseArray(x, control, level);
+    else if (isObject(x))
+      this.traverseObject(x, control, level);
   }
-
-  private isArray(o) {
-    return Object.prototype.toString.call(o) === '[object Array]';
+  private traverseArray(arr: any[], control: AbstractControl, level: number) {
+    arr.forEach(x => this.traverse(x, control, level + 1));
   }
-
-  private traverseArray(arr, group: any) {
-    console.log('<array>');
-    arr.forEach(x => this.traverse(x, group));
-  }
-
-  private traverseObject(obj, group: any) {
-    console.log('<object>');
+  private traverseObject(obj: object, control: AbstractControl, level: number) {
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        const elem = obj[key];
-        if (this.isFormControl(elem)) {
-          console.log(key + ': ' + elem['label'] + ', ' + elem['value']);
-          group[key] = new FormControl(elem['value'] || '');
-        } else {
-          console.log(key + ':');
-          if (Object.entries(elem).length > 0) {
-            group[key] = {};
-            this.traverse(elem, group[key]);
+        const prop = obj[key];
+        if (isControl(prop)) {
+          const c = prop['required'] && prop['required']['value']
+            ? new FormControl(prop['value'] || '', Validators.required)
+            : new FormControl(prop['value'] || '');
+          (control as FormGroup).addControl(key, c);
+        } else if (level < this.maxLevel)
+          if (typeof prop != 'string' && Object.entries(prop).length > 0) {
+            const g = new FormGroup({});
+            (control as FormGroup).addControl(key, g);
+            this.traverse(prop, g, level + 1);
           } else
-            this.traverse(elem, group);
-        }
+            this.traverse(prop, control, level + 1);
       }
     }
   }
-
-  private isFormControl = (obj: any): boolean =>
-    Object.entries(obj).filter(([k, v]) => k == 'value').length > 0;
 }
-
-// Object.entries(elem).filter(([k, v]) => k!='required' && this.isFormControl(v))
 
 

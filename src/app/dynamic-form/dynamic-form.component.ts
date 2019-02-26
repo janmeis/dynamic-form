@@ -23,14 +23,16 @@ function markControlsTouched(group: FormGroup | FormArray): void {
 export class DynamicFormComponent implements OnInit {
   @Input() questions: QuestionBase<any>[] = [];
   @Input() party: any;
+  list: any;
   form: FormGroup;
   partyForm: FormGroup;
   payLoad = false;
+  private readonly maxLevel = 1;
 
   constructor(private qcs: QuestionControlService) { }
   ngOnInit(): void {
     this.form = this.qcs.toFormGroup(this.questions);
-    this.partyForm = this.qcs.toPartyFormGroup(this.party);
+    this.partyForm = this.qcs.toPartyFormGroup(this.party.Identification, this.maxLevel);
   }
   onSubmit() {
     markControlsTouched(this.form);

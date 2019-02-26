@@ -2,7 +2,9 @@
   "Party": {
     "Id": 1,
     "Identification": {
+      "label": "Identifikace",
       "Company": {
+        "label": "Firma",
         "ClientName": {
           "value": "Fialová, Charvátová and Tománek",
           "label": "Jméno klienta",
@@ -25,6 +27,7 @@
           "type": "text"
         },
         "Address": {
+          "label": "Adresa firmy",
           "CountryId": {
             "label": "Země",
             "value": 226,
@@ -53,6 +56,7 @@
         }
       },
       "Person": {
+        "label": "Fyzická osoba",
         "FirstName": {
           "value": "Čeňka",
           "label": "Jméno",
@@ -87,6 +91,7 @@
           "codebook": "country"
         },
         "Address": {
+          "label": "Adresa fyzické osoby",
           "CountryId": {
             "label": "Země",
             "value": 297,

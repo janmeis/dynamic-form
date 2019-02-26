@@ -17,9 +17,9 @@
                         [valueField]="'key'"
                         [valuePrimitive]="true"></kendo-dropdownlist>
 
-    <app-question-datepicker *ngSwitchCase="'datepicker'"
-                            [formControlName]="question.key"
-                            [id]="question.key"></app-question-datepicker>
+    <app-datepicker-input *ngSwitchCase="'datepicker'"
+                          [formControlName]="question.key"
+                          [id]="question.key"></app-datepicker-input>
 
   </div> 
 

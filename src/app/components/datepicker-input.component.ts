@@ -5,7 +5,7 @@ import { BaseControlValueAccessor } from './base-control-value-accessor';
 declare var kendo: any;
 
 @Component({
-  selector: 'app-question-datepicker',
+  selector: 'app-datepicker-input',
   template: `
   <input #datePicker>
   {{value}}
@@ -13,12 +13,12 @@ declare var kendo: any;
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => QuestionDatepickerComponent),
+      useExisting: forwardRef(() => DatepickerInputComponent),
       multi: true
     }
   ]
 })
-export class QuestionDatepickerComponent extends BaseControlValueAccessor<Date> implements AfterViewInit {
+export class DatepickerInputComponent extends BaseControlValueAccessor<Date> implements AfterViewInit {
   value: Date;
   @ViewChild('datePicker') datePickerEl: ElementRef;
 
