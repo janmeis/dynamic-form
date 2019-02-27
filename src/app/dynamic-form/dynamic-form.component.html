@@ -1,4 +1,4 @@
-<div *ngIf="true" style="margin-bottom: 30px;">
+<div *ngIf="topVisible" style="margin-bottom: 30px;">
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
     <div *ngFor="let question of questions" class="form-row">
@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div *ngIf="false">
+<div *ngIf="bottomVisible">
   <form [formGroup]="partyForm" style="width: 50%;">
     <div *ngFor="let group of partyModel" [formGroupName]="group.key" class="k-block">
       <div class="k-header">{{group.label}}</div>

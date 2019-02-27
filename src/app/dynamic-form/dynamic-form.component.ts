@@ -54,23 +54,41 @@ export class DynamicFormComponent implements OnInit {
   partyModel: any[];
   payLoad = false;
   private readonly maxLevel = 2;
+  topVisible = true;
+  bottomVisible = false;
 
   constructor(
     @Host() private parent: AppComponent,
     private qcs: QuestionControlService,
     private qs: QuestionService
-    ) { }
+  ) { }
   ngOnInit(): void {
     this.form = this.qcs.toFormGroup(this.questions);
     this.partyForm = this.qcs.toPartyFormGroup(this.party.Identification, this.maxLevel);
     this.partyModel = this.qs.getPartyModel(this.party.Identification, this.maxLevel);
 
     const container = this.parent.dynamicButtonContainer;
-    container.createComponent('Save', () => this.onSubmit());
-    container.createComponent('Reset', () => {
-      this.form.reset();
-      this.onReset();
-    });
+    setTimeout(() => {
+      container.createComponent('Save', () => this.onSubmit());
+      setTimeout(() => {
+        container.createComponent('Reset', () => {
+          this.form.reset();
+          this.onReset();
+        });
+        setTimeout(() => {
+          const noButton = container.createComponent('Nic nedela', () => { });
+          setTimeout(() => {
+            noButton.text += ' a este se skrejva';
+            noButton.disabled = true;
+            container.createComponent('1. formular', () => this.topVisible = !this.topVisible);
+            setTimeout(() => {
+              noButton.hidden = true;
+              container.createComponent('2. formular', () => this.bottomVisible = !this.bottomVisible);
+            }, 1000);
+          }, 2000);
+        }, 1000);
+      }, 1000);
+    }, 1000);
   }
   onSubmit() {
     markControlsTouched(this.form);

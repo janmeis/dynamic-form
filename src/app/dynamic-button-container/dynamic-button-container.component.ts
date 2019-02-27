@@ -5,7 +5,7 @@ import { DynamicButtonComponent } from '../dynamic-button/dynamic-button.compone
 @Component({
   selector: 'app-dynamic-button-container',
   template: `
-  <div class="form-row">
+  <div class="form-row" style="background-color: #369;padding: 1em 1em;min-height: 2em;">
   <template #buttonContainer></template>
   </div>
   `,
@@ -17,11 +17,13 @@ export class DynamicButtonContainerComponent {
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
-  createComponent(text: string, click: Function): void {
+  createComponent(text: string, click: Function): DynamicButtonComponent {
     const factory = this.resolver.resolveComponentFactory(DynamicButtonComponent);
     this.componentRef = this.entry.createComponent(factory);
     this.componentRef.instance.text = text;
     this.componentRef.instance.click = click;
+
+    return this.componentRef.instance as DynamicButtonComponent;
   }
   destroyComponent = (): void => this.componentRef.destroy();
 }
