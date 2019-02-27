@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
-
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { isArray, isControl, isObject } from '../common/functions';
 import { QuestionBase } from '../components/question-base';
-import { isControl, isArray, isObject } from '../common/functions';
+import { IBaseControl } from '../controls/ibase-control';
 
 
 @Injectable()
@@ -30,36 +30,35 @@ export class QuestionControlService {
   }
 
   // <see cref="https://www.quora.com/How-do-you-loop-through-a-complex-JSON-tree-of-objects-and-arrays-in-JavaScript"/>
-  private traverse(x: any, group: any, level: number) {
+  private traverse(x: any, group: IBaseControl[] | AbstractControl, level: number) {
     if (isArray(x))
       this.traverseArray(x, group, level);
     else if (isObject(x))
       this.traverseObject(x, group, level);
   }
-  private traverseArray(arr: any[], group: any, level: number) {
+  private traverseArray(arr: any[], group: IBaseControl[] | AbstractControl, level: number) {
     arr.forEach(x => this.traverse(x, group, level + 1));
   }
-  private traverseObject(obj: object, group: any, level: number) {
+  private traverseObject(obj: object, group: IBaseControl[] | AbstractControl, level: number) {
     for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (obj.hasOwnProperty(key) && level < this.maxLevel) {
         const prop = obj[key];
         if (isControl(prop)) {
           this.generateControl(key, prop, group);
-        } else if (level < this.maxLevel)
-          if (typeof prop != 'string' && Object.entries(prop).length > 0) {
-            const g = this.generateGroup(key, prop, group);
-            this.traverse(prop, g, level + 1);
-          } else
-            this.traverse(prop, group, level + 1);
+        } else if (typeof prop != 'string' && Object.entries(prop).length > 0) {
+          const g = this.generateGroup(key, prop, group);
+          this.traverse(prop, g, level + 1);
+        } else
+          this.traverse(prop, group, level + 1);
       }
     }
   }
-  private generateGroup(key: string, prop: any, group: any) {
+  private generateGroup(key: string, prop: any, group: IBaseControl[] | AbstractControl) {
     const g = new FormGroup({});
     (group as FormGroup).addControl(key, g);
     return g;
   }
-  private generateControl(key: string, prop: any, group: any) {
+  private generateControl(key: string, prop: any, group: IBaseControl[] | AbstractControl) {
     const c = prop['required'] && prop['required']['value']
       ? new FormControl(prop['value'] || '', Validators.required)
       : new FormControl(prop['value'] || '');

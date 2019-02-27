@@ -19,4 +19,6 @@ export class GroupControl implements IBaseControl {
     this.controlType = 'group';
     this.controls = options.controls || [];
   }
+
+  getControls = (): IBaseControl[] => this.controls.filter(c => c.controlType != 'group');
 }

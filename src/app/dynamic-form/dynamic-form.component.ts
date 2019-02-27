@@ -53,7 +53,7 @@ export class DynamicFormComponent implements OnInit {
   partyForm: FormGroup;
   partyModel: any[];
   payLoad = false;
-  private readonly maxLevel = 1;
+  private readonly maxLevel = 2;
 
   constructor(
     private qcs: QuestionControlService,

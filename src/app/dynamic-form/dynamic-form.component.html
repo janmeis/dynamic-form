@@ -1,4 +1,4 @@
-<div *ngIf="false">
+<div *ngIf="true" style="margin-bottom: 30px;">
   <form (ngSubmit)="onSubmit()" [formGroup]="form">
 
     <div *ngFor="let question of questions" class="form-row">
@@ -16,19 +16,21 @@
   </div>
 </div>
 
-<form [formGroup]="partyForm" style="width: 50%;">
-  <div *ngFor="let group of partyModel" [formGroupName]="group.key" class="k-block">
-    <div class="k-header">{{group.label}}</div>
-    <div class="k-content">
-      <ul class="fieldlist">
-        <li *ngFor="let control of group.controls">
-          <label [attr.for]="control.key">{{control.label}}</label>
-          <input type="text" [formControlName]="control.key" [id]="control.key" kendoTextBox>
-        </li>
-      </ul>
+<div *ngIf="true">
+  <form [formGroup]="partyForm" style="width: 50%;">
+    <div *ngFor="let group of partyModel" [formGroupName]="group.key" class="k-block">
+      <div class="k-header">{{group.label}}</div>
+      <div class="k-content">
+        <ul class="fieldlist">
+          <li *ngFor="let control of group.getControls()">
+            <label [attr.for]="control.key">{{control.label}}</label>
+            <input type="text" [formControlName]="control.key" [id]="control.key" kendoTextBox>
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
 
 
-{{ partyForm.value | json }}
+  {{ partyForm.value | json }}
+</div>

@@ -1,5 +1,6 @@
-import { AfterViewInit, Component, ElementRef, forwardRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, forwardRef, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { DateInputComponent } from '@progress/kendo-angular-dateinputs';
 import { BaseControlValueAccessor } from './base-control-value-accessor';
 
 declare var kendo: any;
@@ -7,7 +8,7 @@ declare var kendo: any;
 @Component({
   selector: 'app-datepicker-input',
   template: `
-  <input #datePicker>
+  <kendo-dateinput [(value)]="value" format="d.M.yyyy" placeholder="Enter birth date..." #dateInput></kendo-dateinput>
   {{value}}
   `,
   providers: [
@@ -20,30 +21,26 @@ declare var kendo: any;
 })
 export class DatepickerInputComponent extends BaseControlValueAccessor<Date> implements AfterViewInit {
   value: Date;
-  @ViewChild('datePicker') datePickerEl: ElementRef;
-
+  @ViewChild('dateInput') dateInput: DateInputComponent;
+  
   constructor() {
     super();
   }
   ngAfterViewInit(): void {
     this.setKendoCulture();
-    const nativeElement = kendo.jQuery(this.datePickerEl.nativeElement);
-    nativeElement.kendoMaskedTextBox({ mask: '00.00.0000' });
+    const nativeElement = kendo.jQuery(this.dateInput.dateInput.nativeElement);
     nativeElement.kendoDatePicker({
       format: 'dd.MM.yyyy',
       parseFormats: ['d.M.yyyy', 'dd.MM.yyyy'],
       change: (e: { sender: { value: () => Date } }) =>
         setTimeout(() => {
-          this.value = e.sender.value();
+          this.value = e.sender.value() as Date;
           this.onChange(this.value);
         }, 0)
     });
     nativeElement.closest('.k-datepicker')
       .add(nativeElement)
       .removeClass('k-textbox');
-    const datePicker = nativeElement.data('kendoDatePicker');
-    datePicker.value(this.value);
-    datePicker.trigger('change');
   }
 
   private setKendoCulture() {

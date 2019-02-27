@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import { AbstractControl } from '@angular/forms';
 import { isArray, isControl, isObject } from '../common/functions';
 import { QuestionBase } from '../components/question-base';
 import { DatepickerQuestion } from '../components/question-datepicker';
@@ -12,6 +12,8 @@ import { DropdownControl } from './../controls/dropdown-control';
 import { GroupControl } from './../controls/group-control';
 
 import party from '../../assets/Party.json';
+import { parseDate } from '@telerik/kendo-intl';
+
 
 @Injectable()
 export class QuestionService {
@@ -66,7 +68,7 @@ export class QuestionService {
         key: 'birthdate',
         label: 'Birth date',
         type: 'date',
-        value: '1.12.2018',
+        value: new Date(2018, 11, 1),
         order: 4
       }),
 
@@ -85,40 +87,39 @@ export class QuestionService {
   }
 
   // <see cref="https://www.quora.com/How-do-you-loop-through-a-complex-JSON-tree-of-objects-and-arrays-in-JavaScript"/>
-  private traverse(x: any, group: any, level: number) {
+  private traverse(x: any, group: IBaseControl[] | AbstractControl, level: number) {
     if (isArray(x))
       this.traverseArray(x, group, level);
     else if (isObject(x))
       this.traverseObject(x, group, level);
   }
-  private traverseArray(arr: any[], group: any, level: number) {
+  private traverseArray(arr: any[], group: IBaseControl[] | AbstractControl, level: number) {
     arr.forEach(x => this.traverse(x, group, level + 1));
   }
-  private traverseObject(obj: object, group: any, level: number) {
+  private traverseObject(obj: object, group: IBaseControl[] | AbstractControl, level: number) {
     for (var key in obj) {
-      if (obj.hasOwnProperty(key)) {
+      if (obj.hasOwnProperty(key) && level < this.maxLevel) {
         const prop = obj[key];
         if (isControl(prop)) {
           this.generateControl(key, prop, group);
-        } else if (level < this.maxLevel)
-          if (typeof prop != 'string' && Object.entries(prop).length > 0) {
-            const g = this.generateGroup(key, prop, group);
-            this.traverse(prop, g, level + 1);
-          } else
-            this.traverse(prop, group, level + 1);
+        } else if (typeof prop != 'string' && Object.entries(prop).length > 0) {
+          const g = this.generateGroup(key, prop, group);
+          this.traverse(prop, g, level + 1);
+        } else
+          this.traverse(prop, group, level + 1);
       }
     }
   }
-  private generateGroup(key: string, prop: any, group: any): IBaseControl[] {
-    const g = new GroupControl({ 
-        key: key, 
-        label: prop['label'] 
-      });
-    group.push(g);
-    
+  private generateGroup(key: string, prop: any, group: IBaseControl[] | AbstractControl): IBaseControl[] {
+    const g = new GroupControl({
+      key: key,
+      label: prop['label']
+    });
+    (group as IBaseControl[]).push(g);
+
     return g.controls;
   }
-  private generateControl(key: string, prop: any, group: any): void {
+  private generateControl(key: string, prop: any, group: IBaseControl[] | AbstractControl): void {
     let c: IBaseControl;
     let options = {
       key: key,
@@ -145,12 +146,13 @@ export class QuestionService {
         });
         break;
       case 'date':
+        options.value = parseDate(prop['value'], 'yyyy-MM-dd');
         c = new DatepickerControl(options);
         break;
       default:
         break;
     }
 
-    group.push(c);
+    (group as IBaseControl[]).push(c);
   }
 }
