@@ -9,7 +9,9 @@ declare var kendo: any;
   selector: 'app-datepicker-input',
   template: `
   <kendo-dateinput [(value)]="value" format="d.M.yyyy" placeholder="Enter birth date..." #dateInput></kendo-dateinput>
-  {{value}}
+  <span style="padding-left: 10px;font-style: italic;">
+  {{value | date:'d.M.yyyy HH:mm'}}
+  </span>
   `,
   providers: [
     {
@@ -22,7 +24,7 @@ declare var kendo: any;
 export class DatepickerInputComponent extends BaseControlValueAccessor<Date> implements AfterViewInit {
   value: Date;
   @ViewChild('dateInput') dateInput: DateInputComponent;
-  
+
   constructor() {
     super();
   }
@@ -32,11 +34,10 @@ export class DatepickerInputComponent extends BaseControlValueAccessor<Date> imp
     nativeElement.kendoDatePicker({
       format: 'dd.MM.yyyy',
       parseFormats: ['d.M.yyyy', 'dd.MM.yyyy'],
-      change: (e: { sender: { value: () => Date } }) =>
-        setTimeout(() => {
-          this.value = e.sender.value() as Date;
-          this.onChange(this.value);
-        }, 0)
+      change: e => {
+        this.value = e.sender.value() as Date;
+        this.onChange(this.value);
+      }
     });
     nativeElement.closest('.k-datepicker')
       .add(nativeElement)
@@ -49,15 +50,15 @@ export class DatepickerInputComponent extends BaseControlValueAccessor<Date> imp
       // full day names
       names: ['Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
       // abbreviated day names
-      namesAbbr: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+      namesAbbr: ['Ned', 'Pon', 'Úte', 'Stř', 'Čtv', 'Pát', 'Sob'],
       // shortest day names
       namesShort: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So']
     };
     kendo.culture().calendar.months = {
       // full month names
-      names: ['Leden', 'Únor', 'Březen', 'Duben', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+      names: ['Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'],
       // abbreviated month names
-      namesAbbr: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      namesAbbr: ['Led', 'Úno', 'Bře', 'Dub', 'Kvě', 'Čen', 'Čec', 'Srp', 'Zář', 'Říj', 'Lis', 'Pro']
     };
   }
 }

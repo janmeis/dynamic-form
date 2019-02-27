@@ -11,8 +11,12 @@ import { AppComponent } from './app.component';
 import { DatepickerInputComponent } from './components/datepicker-input.component';
 import { DynamicFormQuestionComponent } from './dynamic-form-question/dynamic-form-question.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { QuestionService } from './services/question.service';
+import { QuestionControlService } from './services/question-control.service';
 
 import '@progress/kendo-ui';
+import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
+import { DynamicButtonContainerComponent } from './dynamic-button-container/dynamic-button-container.component';
 
 @NgModule({
   imports: [
@@ -31,7 +35,14 @@ import '@progress/kendo-ui';
     DynamicFormComponent,
     DynamicFormQuestionComponent,
     DatepickerInputComponent,
+    DynamicButtonComponent,
+    DynamicButtonContainerComponent,
   ],
+  providers: [
+    QuestionService,
+    QuestionControlService
+  ],
+  entryComponents: [DynamicButtonComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

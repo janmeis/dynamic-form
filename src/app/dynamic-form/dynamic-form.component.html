@@ -5,10 +5,10 @@
       <app-question [question]="question" [form]="form"></app-question>
     </div>
 
-    <div class="form-row">
+    <!-- <div class="form-row">
       <button type="submit">Save</button>
       <button type="reset" (click)="onReset()">Reset</button>
-    </div>
+    </div> -->
   </form>
 
   <div *ngIf="payLoad" class="form-row">
@@ -16,7 +16,7 @@
   </div>
 </div>
 
-<div *ngIf="true">
+<div *ngIf="false">
   <form [formGroup]="partyForm" style="width: 50%;">
     <div *ngFor="let group of partyModel" [formGroupName]="group.key" class="k-block">
       <div class="k-header">{{group.label}}</div>
