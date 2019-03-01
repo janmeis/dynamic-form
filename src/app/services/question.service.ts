@@ -66,7 +66,7 @@ export class QuestionService {
 
       new DatepickerQuestion({
         key: 'birthdate',
-        label: 'Birth date',
+        label: 'Datum narození',
         type: 'date',
         value: new Date(2018, 11, 1),
         order: 4

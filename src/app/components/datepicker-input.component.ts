@@ -8,7 +8,7 @@ declare var kendo: any;
 @Component({
   selector: 'app-datepicker-input',
   template: `
-  <kendo-dateinput [(value)]="value" format="d.M.yyyy" placeholder="Enter birth date..." #dateInput></kendo-dateinput>
+  <kendo-dateinput [(value)]="value" format="d.M.yyyy" placeholder="" #dateInput></kendo-dateinput>
   <span style="padding-left: 10px;font-style: italic;">
   {{value | date:'d.M.yyyy HH:mm'}}
   </span>
@@ -39,9 +39,9 @@ export class DatepickerInputComponent extends BaseControlValueAccessor<Date> imp
         this.onChange(this.value);
       }
     });
-    nativeElement.closest('.k-datepicker')
-      .add(nativeElement)
-      .removeClass('k-textbox');
+    // nativeElement.closest('.k-datepicker')
+    //   .add(nativeElement)
+    //   .removeClass('k-textbox');
   }
 
   private setKendoCulture() {
