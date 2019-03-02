@@ -17,6 +17,7 @@ import { QuestionControlService } from './services/question-control.service';
 import { QuestionService } from './services/question.service';
 
 import '@progress/kendo-ui';
+import { DynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import '@progress/kendo-ui';
     DatepickerInputComponent,
     DynamicButtonComponent,
     DynamicButtonContainerComponent,
+    DynamicFormControlComponent,
   ],
   providers: [
     QuestionService,

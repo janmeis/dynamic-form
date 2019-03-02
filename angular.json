@@ -23,12 +23,14 @@
               "src/assets"
             ],
             "styles": [
-              "node_modules/@progress/kendo-ui/css/web/kendo.common.min.css",
-              "node_modules/@progress/kendo-ui/css/web/kendo.default.min.css",
-              "node_modules/@progress/kendo-ui/css/web/kendo.default.mobile.min.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/@progress/kendo-ui/css/web/kendo.bootstrap-v4.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ]
           },
           "configurations": {
             "production": {

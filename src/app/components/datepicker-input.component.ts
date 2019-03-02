@@ -8,10 +8,7 @@ declare var kendo: any;
 @Component({
   selector: 'app-datepicker-input',
   template: `
-  <kendo-dateinput [(value)]="value" format="d.M.yyyy" placeholder="" #dateInput></kendo-dateinput>
-  <span style="padding-left: 10px;font-style: italic;">
-  {{value | date:'d.M.yyyy HH:mm'}}
-  </span>
+  <kendo-dateinput [(ngModel)]="value" format="d.M.yyyy" placeholder="" #dateInput></kendo-dateinput>
   `,
   providers: [
     {

@@ -5,7 +5,7 @@ import { DynamicButtonComponent } from '../dynamic-button/dynamic-button.compone
 @Component({
   selector: 'app-dynamic-button-container',
   template: `
-  <div class="form-row" style="background-color: #369;padding: 1em 1em;min-height: 2em;">
+  <div style="background-color: #369;padding: 1em 1em;min-height: 2em;">
   <template #buttonContainer></template>
   </div>
   `,

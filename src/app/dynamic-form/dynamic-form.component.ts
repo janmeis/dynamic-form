@@ -1,5 +1,6 @@
+import { GroupControl } from './../controls/group-control';
 import { Component, Host, Input, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray, FormGroup, Form } from '@angular/forms';
 import { AppComponent } from '../app.component';
 import { QuestionBase } from '../components/question-base';
 import { QuestionControlService } from '../services/question-control.service';
@@ -19,31 +20,7 @@ function markControlsTouched(group: FormGroup | FormArray): void {
 
 @Component({
   selector: 'app-dynamic-form',
-  templateUrl: './dynamic-form.component.html',
-  styles: [`
-    .fieldlist {
-      margin: 0;
-      padding: .2em 0 .5em 0;
-      background-color: #eae8e8;
-  }
-  .fieldlist li {
-      list-style: none;
-      padding: 0 1em 1em 1em;
-  }
-  .fieldlist label {
-      display: block;
-      font-weight: bold;
-      font-size: .8em;
-      padding-bottom: .3em;
-      color: #444;
-  }    
-  .k-textbox {
-    width: 100%;
-  }
-  .k-block {
-    margin-bottom: 2em;
-  }
-  `]
+  templateUrl: './dynamic-form.component.html'
 })
 export class DynamicFormComponent implements OnInit {
   @Input() questions: QuestionBase<any>[] = [];
@@ -54,8 +31,8 @@ export class DynamicFormComponent implements OnInit {
   partyModel: any[];
   payLoad = false;
   private readonly maxLevel = 2;
-  topVisible = true;
-  bottomVisible = false;
+  topVisible = false;
+  bottomVisible = true;
 
   constructor(
     @Host() private parent: AppComponent,

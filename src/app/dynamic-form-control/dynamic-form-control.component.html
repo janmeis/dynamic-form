@@ -1,0 +1,19 @@
+<div [formGroup]="form" class="form-group">
+  <label [attr.for]="control.key">{{control.label}}</label>
+
+  <div [ngSwitch]="control.controlType">
+    <input *ngSwitchCase="'textbox'"
+           [formControlName]="control.key" [id]="control.key" type="text" class="form-control">
+
+    <select *ngSwitchCase="'dropdown'"
+            [formControlName]="control.key" [id]="control.key" class="form-control">
+            <option value="106">CZ</option>
+            <option value="107">SK</option>
+    </select>
+
+    <app-datepicker-input *ngSwitchCase="'datepicker'"
+                          [formControlName]="control.key"
+                          [id]="control.key"></app-datepicker-input>
+
+  </div>
+</div>

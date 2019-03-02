@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { parseDate } from '@telerik/kendo-intl';
 import { isArray, isControl, isObject } from '../common/functions';
 import { QuestionBase } from '../components/question-base';
 import { IBaseControl } from '../controls/ibase-control';
@@ -59,9 +60,25 @@ export class QuestionControlService {
     return g;
   }
   private generateControl(key: string, prop: any, group: IBaseControl[] | AbstractControl) {
-    const c = prop['required'] && prop['required']['value']
-      ? new FormControl(prop['value'] || '', Validators.required)
-      : new FormControl(prop['value'] || '');
+    let c: FormControl;
+    switch (prop['type']) {
+      case 'text':
+        c = new FormControl(prop['value'] || '')
+        break;
+      case 'dropdown':
+        c = new FormControl(prop['value']);
+        break;
+      case 'date':
+        const value = parseDate(prop['value'], 'yyyy-MM-dd');
+        c = new FormControl(value);
+        break;
+      default:
+        break;
+    }
+
+    if (prop['required'] && prop['required']['value'])
+      c.setValidators(Validators.required);
+
     (group as FormGroup).addControl(key, c);
   }
 }

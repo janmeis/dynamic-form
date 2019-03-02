@@ -18,15 +18,14 @@
 
 <div *ngIf="bottomVisible">
   <form [formGroup]="partyForm" style="width: 50%;">
-    <div *ngFor="let group of partyModel" [formGroupName]="group.key" class="k-block">
-      <div class="k-header">{{group.label}}</div>
-      <div class="k-content">
-        <ul class="fieldlist">
-          <li *ngFor="let control of group.getControls()">
-            <label [attr.for]="control.key">{{control.label}}</label>
-            <input type="text" [formControlName]="control.key" [id]="control.key" kendoTextBox>
-          </li>
-        </ul>
+    <div *ngFor="let group of partyModel" class="card border-dark mb-3">
+      <div class="card-header">{{group.label}}</div>
+      <div class="card-body text-dark">
+        <div class="card-text">
+          <ng-container *ngFor="let control of group.getControls()">
+            <app-dynamic-form-control [control]="control" [form]="partyForm.controls[group.key]"></app-dynamic-form-control>
+          </ng-container>
+        </div>
       </div>
     </div>
   </form>
