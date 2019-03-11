@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { parseDate } from '@telerik/kendo-intl';
 import { isArray, isControl, isObject } from '../common/functions';
-import { QuestionBase } from '../components/question-base';
-import { DatepickerQuestion } from '../components/question-datepicker';
-import { DropdownQuestion } from '../components/question-dropdown';
-import { TextboxQuestion } from '../components/question-textbox';
 import { IBaseControl } from '../controls/ibase-control';
 import { TextboxControl } from '../controls/textbox-control';
 import { DatepickerControl } from './../controls/datepicker-control';
@@ -21,60 +17,6 @@ export class QuestionService {
 
   getParty(): any {
     return party.Party;
-  }
-
-  // TODO: get from a remote source of question metadata
-  // TODO: make asynchronous
-  getQuestions() {
-
-    let questions: QuestionBase<any>[] = [
-
-      new DropdownQuestion({
-        key: 'brave',
-        label: 'Bravery Rating',
-        options: [
-          { key: 'solid', value: 'Solid' },
-          { key: 'great', value: 'Great' },
-          { key: 'good', value: 'Good' },
-          { key: 'unproven', value: 'Unproven' }
-        ],
-        order: 3
-      }),
-
-      new TextboxQuestion({
-        key: 'firstName',
-        label: 'First name',
-        value: 'Jan',
-        required: {
-          value: true,
-          text: '!!! You must enter you first name !!!'
-        },
-        order: 1
-      }),
-
-      new TextboxQuestion({
-        key: 'emailAddress',
-        label: 'Email',
-        type: 'email',
-        value: 'jan.novak@email.cz',
-        required: {
-          value: true,
-          text: '*** Also enter your email address! ***'
-        },
-        order: 2
-      }),
-
-      new DatepickerQuestion({
-        key: 'birthdate',
-        label: 'Datum narození',
-        type: 'date',
-        value: new Date(2018, 11, 1),
-        order: 4
-      }),
-
-    ];
-
-    return questions.sort((a, b) => a.order - b.order);
   }
 
   getPartyModel(party: any, maxLevel?: number): any[] {

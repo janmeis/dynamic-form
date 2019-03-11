@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { parseDate } from '@telerik/kendo-intl';
 import { isArray, isControl, isObject } from '../common/functions';
-import { QuestionBase } from '../components/question-base';
 import { IBaseControl } from '../controls/ibase-control';
 
 
@@ -10,17 +9,6 @@ import { IBaseControl } from '../controls/ibase-control';
 export class QuestionControlService {
   private maxLevel: number;
   constructor() { }
-
-  toFormGroup(questions: QuestionBase<any>[]) {
-    let group = {};
-
-    questions.forEach(question => {
-      group[question.key] = question.required && question.required.value
-        ? new FormControl(question.value || '', Validators.required)
-        : new FormControl(question.value || '');
-    });
-    return new FormGroup(group);
-  }
 
   toPartyFormGroup(party: any, maxLevel: number): FormGroup {
     this.maxLevel = maxLevel;
