@@ -27,5 +27,7 @@
     ></app-datepicker-input>
   </div>
 
-  <div class="errorMessage" *ngIf="!isValid && isTouched">{{ control.required.text }}</div>
+  <div class="errorMessage" *ngIf="!isValid && isTouched">
+    {{ control.required?.text ? control.required.text : 'Property \'' + control.label + '\' is required' }}
+  </div>
 </div>
