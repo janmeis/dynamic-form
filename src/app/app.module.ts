@@ -8,6 +8,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { AppComponent } from './app.component';
+import { DatepickerInputComponent } from './controls/datepicker-input.component';
 import { DynamicButtonContainerComponent } from './dynamic-button-container/dynamic-button-container.component';
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
 import { DynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
@@ -36,6 +37,7 @@ import '@progress/kendo-ui';
     DynamicButtonComponent,
     DynamicButtonContainerComponent,
     DynamicFormControlComponent,
+    DatepickerInputComponent,
   ],
   providers: [
     QuestionService,
