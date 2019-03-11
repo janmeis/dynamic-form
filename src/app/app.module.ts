@@ -10,12 +10,13 @@ import { InputsModule } from '@progress/kendo-angular-inputs';
 import { AppComponent } from './app.component';
 import { DynamicButtonContainerComponent } from './dynamic-button-container/dynamic-button-container.component';
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
+import { DynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
 import { QuestionControlService } from './services/question-control.service';
 import { QuestionService } from './services/question.service';
 
 import '@progress/kendo-ui';
-import { DynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
+
 
 @NgModule({
   imports: [
