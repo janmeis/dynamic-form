@@ -9,7 +9,6 @@ import { BaseInputControl } from '../controls/base-input-control';
 export class DynamicFormControlComponent<T> {
   @Input() control: BaseInputControl<T>;
   @Input() form: FormGroup;
-
-  constructor(){
-  }
+  get isValid() { return this.form.controls[this.control.key].valid; }
+  get isTouched() { return this.form.controls[this.control.key].touched; }
 }

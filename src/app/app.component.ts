@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { DynamicButtonContainerComponent } from './dynamic-button-container/dynamic-button-container.component';
-import { QuestionService } from './services/question.service';
 
 declare var kendo: any;
 
@@ -10,12 +9,9 @@ declare var kendo: any;
 })
 export class AppComponent {
   @ViewChild('dynamicButtonContainer') dynamicButtonContainer: DynamicButtonContainerComponent;
-  questions: any[];
   party: any;
 
-  constructor(service: QuestionService) {
-    this.questions = service.getQuestions();
-    this.party = service.getParty();
+  constructor() {
     if (window !== undefined) {
       (<any>window).$ = kendo.jQuery;
     }
