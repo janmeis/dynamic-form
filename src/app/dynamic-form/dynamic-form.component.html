@@ -1,14 +1,14 @@
-<form [formGroup]="partyForm" (ngSubmit)="onSubmit()" style="width: 50%;">
-  <div *ngFor="let group of partyModel" class="card border-dark mb-3">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" style="width: 50%;">
+  <div *ngFor="let group of model" class="card border-dark mb-3">
     <div class="card-header">{{group.label}}</div>
     <div class="card-body text-dark">
       <div class="card-text">
         <ng-container *ngFor="let control of group.getControls()">
-          <app-dynamic-form-control [control]="control" [form]="partyForm.controls[group.key]"></app-dynamic-form-control>
+          <app-dynamic-form-control [control]="control" [form]="form.controls[group.key]"></app-dynamic-form-control>
         </ng-container>
       </div>
     </div>
   </div>
 </form>
 
-{{ partyForm.value | json }}
+{{ form.value | json }}

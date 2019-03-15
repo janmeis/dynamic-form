@@ -6,12 +6,12 @@ import { DynamicFormBaseService } from './dynamic-form-base.service';
 
 
 @Injectable()
-export class QuestionControlService extends DynamicFormBaseService {
+export class DynamicFormControlService extends DynamicFormBaseService {
   maxLevel: number;
   constructor() {
     super();
    }
-  toPartyFormGroup(party: any, maxLevel: number): FormGroup {
+  toFormGroup(party: any, maxLevel: number): FormGroup {
     this.maxLevel = maxLevel;
     let form = new FormGroup({});
     this.traverse(party, form, 0);

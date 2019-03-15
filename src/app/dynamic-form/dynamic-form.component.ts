@@ -1,8 +1,8 @@
 import { Component, Host, OnInit } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { AppComponent } from '../app.component';
-import { QuestionControlService } from '../services/question-control.service';
-import { QuestionService } from './../services/question.service';
+import { DynamicFormControlService } from '../services/dynamic-form-control.service';
+import { DynamicFormService } from '../services/dynamic-form.service';
 
 
 /// <see cref="https://stackoverflow.com/a/50992362"></see>
@@ -23,19 +23,19 @@ function markControlsTouched(group: FormGroup | FormArray): void {
 })
 export class DynamicFormComponent implements OnInit {
   party: any;
-  partyForm: FormGroup;
-  partyModel: any[];
+  form: FormGroup;
+  model: any[];
   private readonly maxLevel = 2;
 
   constructor(
     @Host() private parent: AppComponent,
-    private qcs: QuestionControlService,
-    private qs: QuestionService,
+    private dynamicFormControlService: DynamicFormControlService,
+    private dynamicFormService: DynamicFormService,
   ) { }
   ngOnInit(): void {
-    this.party = this.qs.getParty();
-    this.partyForm = this.qcs.toPartyFormGroup(this.party.Identification, this.maxLevel);
-    this.partyModel = this.qs.getPartyModel(this.party.Identification, this.maxLevel);
+    this.party = this.dynamicFormService.getParty();
+    this.model = this.dynamicFormService.getModel(this.party.Identification, this.maxLevel);
+    this.form = this.dynamicFormControlService.toFormGroup(this.party.Identification, this.maxLevel);
 
     const container = this.parent.dynamicButtonContainer;
     // setTimeout(() => {
@@ -61,10 +61,10 @@ export class DynamicFormComponent implements OnInit {
     // }, 1000);
   }
   onSubmit() {
-    markControlsTouched(this.partyForm);
+    markControlsTouched(this.form);
   }
   onReset() {
-    this.partyForm.reset();
+    this.form.reset();
   }
 }
 

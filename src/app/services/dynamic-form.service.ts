@@ -3,16 +3,16 @@ import { AbstractControl } from '@angular/forms';
 import { parseDate } from '@telerik/kendo-intl';
 import { IBaseControl } from '../controls/ibase-control';
 import { TextboxControl } from '../controls/textbox-control';
-import { DatepickerControl } from './../controls/datepicker-control';
-import { DropdownControl } from './../controls/dropdown-control';
-import { GroupControl } from './../controls/group-control';
+import { DatepickerControl } from '../controls/datepicker-control';
+import { DropdownControl } from '../controls/dropdown-control';
+import { GroupControl } from '../controls/group-control';
 import { DynamicFormBaseService } from './dynamic-form-base.service';
 
 import party from '../../assets/Party.json';
 
 
 @Injectable()
-export class QuestionService extends DynamicFormBaseService {
+export class DynamicFormService extends DynamicFormBaseService {
   maxLevel = Number.MAX_VALUE;
 
   constructor() {
@@ -21,7 +21,7 @@ export class QuestionService extends DynamicFormBaseService {
   getParty(): any {
     return party.Party;
   }
-  getPartyModel(party: any, maxLevel?: number): any[] {
+  getModel(party: any, maxLevel?: number): any[] {
     if (maxLevel)
       this.maxLevel = maxLevel;
 

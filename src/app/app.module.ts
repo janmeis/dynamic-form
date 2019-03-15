@@ -13,8 +13,8 @@ import { DynamicButtonContainerComponent } from './dynamic-button-container/dyna
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
 import { DynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
-import { QuestionControlService } from './services/question-control.service';
-import { QuestionService } from './services/question.service';
+import { DynamicFormControlService } from './services/dynamic-form-control.service';
+import { DynamicFormService } from './services/dynamic-form.service';
 
 import '@progress/kendo-ui';
 
@@ -40,8 +40,8 @@ import '@progress/kendo-ui';
     DatepickerInputComponent,
   ],
   providers: [
-    QuestionService,
-    QuestionControlService
+    DynamicFormService,
+    DynamicFormControlService
   ],
   entryComponents: [DynamicButtonComponent],
   bootstrap: [AppComponent]
