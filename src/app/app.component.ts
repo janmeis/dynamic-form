@@ -1,5 +1,6 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DynamicButtonContainerComponent } from './dynamic-button-container/dynamic-button-container.component';
+import { ButtonService } from './services/button.service';
 
 declare var kendo: any;
 
@@ -7,13 +8,18 @@ declare var kendo: any;
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
-  @ViewChild('dynamicButtonContainer') dynamicButtonContainer: DynamicButtonContainerComponent;
-  party: any;
+export class AppComponent implements OnInit {
+  @ViewChild(DynamicButtonContainerComponent) dynamicButtonContainer: DynamicButtonContainerComponent;
 
-  constructor() {
+  constructor(
+    private buttonService: ButtonService
+  ) {
     if (window !== undefined) {
       (<any>window).$ = kendo.jQuery;
     }
+  }
+  ngOnInit(): void {
+    if (this.dynamicButtonContainer)
+      this.buttonService.dynamicButtonContainer = this.dynamicButtonContainer;
   }
 }

@@ -1,5 +1,6 @@
 import { Component, ComponentFactoryResolver, ComponentRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { DynamicButtonComponent } from '../dynamic-button/dynamic-button.component';
+import { timer } from 'rxjs';
 
 
 @Component({
@@ -17,13 +18,18 @@ export class DynamicButtonContainerComponent {
 
   constructor(private resolver: ComponentFactoryResolver) { }
 
-  createComponent(text: string, click: Function): DynamicButtonComponent {
+  createComponent(text: string, click: () => void): ComponentRef<DynamicButtonComponent> {
     const factory = this.resolver.resolveComponentFactory(DynamicButtonComponent);
     this.componentRef = this.entry.createComponent(factory);
     this.componentRef.instance.text = text;
     this.componentRef.instance.click = click;
 
-    return this.componentRef.instance as DynamicButtonComponent;
+    return this.componentRef;
+  }
+  deleteComponent(componentRef: ComponentRef<DynamicButtonComponent>): void {
+    const view = componentRef.hostView;
+    const index = this.entry.indexOf(view);
+    this.entry.remove(index);
   }
   destroyComponent = (): void => this.componentRef.destroy();
 }

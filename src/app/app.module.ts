@@ -13,6 +13,7 @@ import { DynamicButtonContainerComponent } from './dynamic-button-container/dyna
 import { DynamicButtonComponent } from './dynamic-button/dynamic-button.component';
 import { DynamicFormControlComponent } from './dynamic-form-control/dynamic-form-control.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
+import { ButtonService } from './services/button.service';
 import { DynamicFormControlService } from './services/dynamic-form-control.service';
 import { DynamicFormService } from './services/dynamic-form.service';
 
@@ -41,7 +42,8 @@ import '@progress/kendo-ui';
   ],
   providers: [
     DynamicFormService,
-    DynamicFormControlService
+    DynamicFormControlService,
+    ButtonService
   ],
   entryComponents: [DynamicButtonComponent],
   bootstrap: [AppComponent]

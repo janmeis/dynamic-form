@@ -9,13 +9,15 @@ import { Button } from '@progress/kendo-angular-buttons';
   styles: []
 })
 export class DynamicButtonComponent implements OnInit {
-  @Input() text: string;
-  @Input() click: Function;
-  @Input() hidden = false;
-  @Input() disabled = false;
   @ViewChild('dynamicButton') dynamicButton: Button;
-  
-  constructor() { }
+  text: string;
+  click: () => void;
+  hidden = false;
+  disabled = false;
+
+  constructor() {
+
+  }
 
   ngOnInit() {
   }
