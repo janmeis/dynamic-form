@@ -1,6 +1,7 @@
 <div>
+    <h5 *ngIf="production">We are running in production!</h5>
+    <h5 *ngIf="!production">We are running in development...</h5>
     <app-dynamic-button-container #dynamicButtonContainer></app-dynamic-button-container>
     <h2>Job Application for Heroes</h2>
     <app-dynamic-form></app-dynamic-form>
-
 </div>
